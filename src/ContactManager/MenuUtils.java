@@ -3,14 +3,20 @@ package ContactManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 
 public class MenuUtils extends JFrame {
     // for menu
+    private static String refKey;
     static JMenuBar menu;
     static JMenu file, edit, view, help;
     static JMenuItem newContact, exportContact, logout, exit, editContact, deleteContact, recentContact, allContacts, about, userGuide;
     static Font menuFont = new Font("Times New Roman", Font.PLAIN, 18);
+
+   static void setRefKey(String refKey) {
+       MenuUtils.refKey = refKey;
+   }
 
     static void setMenu()      // for menu items
     {
@@ -83,7 +89,7 @@ public class MenuUtils extends JFrame {
 
     static void setMenuLogic() {
         newContact.addActionListener(e -> {
-            SwingUtilities.invokeLater(AddContacts::new);
+            SwingUtilities.invokeLater(() -> new AddContacts(refKey));
         });
 
         about.addActionListener(e -> JOptionPane.showMessageDialog(null, " Developer Name = Sunil Mahato \n Education : BCA 6th Sem \n Contact : +977-9860650642 \n Email : sunilmaht642@gmail.com"));

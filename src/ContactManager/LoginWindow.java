@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class LoginWindow implements ActionListener {
     private JFrame frame;
@@ -83,7 +84,10 @@ public class LoginWindow implements ActionListener {
                 Validate valid = new Validate(id, password);
                 if (valid.checkValidity()) {
                     frame.dispose();
-                    SwingUtilities.invokeLater(Dashboard::new);
+                    //retreive the admin phone number as a unique key
+                    ArrayList<String> key = DatabaseManager.getAdminInfo(id);
+                    SwingUtilities.invokeLater(() -> new Dashboard(key.get(3)));
+
                 } else JOptionPane.showMessageDialog(frame, "Invalid Username or Password !");
             }
         }

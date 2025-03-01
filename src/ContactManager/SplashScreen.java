@@ -80,27 +80,6 @@ public class SplashScreen {
         frame.setVisible(true);
     }
 
-//    // Function to animate the progress bar
-//    void loadProgress() {
-//        timer = new Timer(50, e -> {
-//            if (progress <= 100) {
-//                progressbar.setValue(progress);
-//                message.setText("Loading ... " + progress + "%");
-//                progress++;
-//            } else {
-//                timer.stop();
-//                Timer pauseTimer = new Timer(300, ev -> {
-//                    frame.dispose();
-//                    SwingUtilities.invokeLater(InitWindow::new); // Switch to home screen
-//                });
-//                pauseTimer.setRepeats(false);
-//                pauseTimer.start();
-//            }
-//        });
-//
-//        timer.start(); // Start the timer
-//    }
-
     // start the initial configuration for the database
     private void loadDatabaseWithProgress() {
         try {
@@ -125,7 +104,7 @@ public class SplashScreen {
             String createAdminTable = "CREATE TABLE IF NOT EXISTS admin (" + "id INT PRIMARY KEY AUTO_INCREMENT, " + "Name VARCHAR(100) NOT NULL," + "Phone VARCHAR(20)  UNIQUE NOT NULL," + "Address VARCHAR(255) NOT NULL," + "Email VARCHAR(255) NOT NULL,"  + "Username VARCHAR(100) UNIQUE NOT NULL," + "Salt VARCHAR(255) UNIQUE NOT NULL, " + "Hash VARCHAR(255) UNIQUE NOT NULL" + ")";
             dbStmt.executeUpdate(createAdminTable);
 
-            String contactTable = "CREATE TABLE IF NOT EXISTS contact_info (" + "id INT PRIMARY KEY AUTO_INCREMENT, " + "Name VARCHAR(100) NOT NULL, " + "Phone VARCHAR(20) UNIQUE NOT NULL, " + "Email VARCHAR(255) UNIQUE NOT NULL, " + "Address VARCHAR(255) NOT NULL, " + "Phone2 VARCHAR(20) DEFAULT NULL" + ")";
+            String contactTable = "CREATE TABLE IF NOT EXISTS contact_info (" + "id INT PRIMARY KEY AUTO_INCREMENT, " + "Name VARCHAR(100) NOT NULL, " + "Phone VARCHAR(20) UNIQUE NOT NULL, " + "Email VARCHAR(255) UNIQUE NOT NULL, " + "Address VARCHAR(255) NOT NULL, " + "Phone2 VARCHAR(20) DEFAULT NULL," + "RefId VARCHAR(20) NOT NULL, " + " FOREIGN KEY (RefId) REFERENCES admin(Phone)" + ")";
             dbStmt.executeUpdate(contactTable);
 
             updateProgress("Finalizing setup...", 80);

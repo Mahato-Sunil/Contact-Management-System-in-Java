@@ -4,12 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AddContacts {
+    private String refKey;
     private JFrame frame;
     private JLabel imgTitle, firstNameLabel, lastNameLabel, emailLabel, phoneNoLabel, addressLabel, altPhoneLabel, confirmPasswordLabel;
     private JTextField firstName, lastName, email, phone, address, altPhone;
     private JButton sendButton, skipButton;
 
-    public AddContacts() {
+    public AddContacts(String refKey) {
+        this.refKey = refKey;
         createUIComponents();
     }
 
@@ -161,10 +163,11 @@ public class AddContacts {
         if (fnameInpt.isEmpty() || lnameInpt.isEmpty() || phoneInpt.isEmpty() || addressInpt.isEmpty() || emailInpt.isEmpty() || altPhoneInpt.isEmpty())
             JOptionPane.showMessageDialog(frame, "Please fill all the fields");
         else {
-            Boolean isContactAdded = DatabaseManager.addNewContact(fnameInpt, lnameInpt, phoneInpt, addressInpt, emailInpt, altPhoneInpt);
+            Boolean isContactAdded = DatabaseManager.addNewContact(fnameInpt, lnameInpt, phoneInpt, addressInpt, emailInpt, altPhoneInpt, refKey);
 
             if (isContactAdded) {
                 JOptionPane.showMessageDialog(frame, "You have successfully added new contact");
+                Dashboard.refreshTableData();
                 frame.dispose();
             } else JOptionPane.showMessageDialog(frame, "Something went wrong");
         }
